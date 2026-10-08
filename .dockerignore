@@ -1,0 +1,16 @@
+*
+!Dockerfile
+!requirements-docker.txt
+!run.py
+!app/
+!app/**
+!migrations/
+!migrations/**
+!deployment/
+!deployment/**
+**/__pycache__/
+**/*.pyc
+**/*.pem
+**/*.key
+**/*.db
+**/.env*

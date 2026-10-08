@@ -43,3 +43,7 @@ The authenticated Security laboratory performs six real ephemeral-key experiment
 `flask --app run db upgrade` applied the initial migration. `flask --app run init-ca` created encrypted CA material. `flask --app run verify-security-config` checked configured secrets and PEM permissions. `flask --app run db check` checks schema drift. Test-client HTTP flows exercise startup, templates and operations. No real-browser visual verification or public hosting is claimed.
 
 Final executed test output is recorded in `docs/test-results.txt`. Coverage is a measurement of executed statements, not proof of cryptographic security. Open-source dependencies, OS security, TLS deployment and broader operational controls require separate review.
+
+## Docker deployment addition
+
+On 2026-10-08, `pytest -q tests/test_deployment.py --tb=short` passed all **4 deployment tests in 2.46 seconds**. `gunicorn --check-config --config deployment/gunicorn.conf.py run:app` exited successfully. Both Compose files parsed as YAML. Docker was not installed in the authoring workspace, so these results do not represent a built image or running container; see `docs/docker.md` for host verification.

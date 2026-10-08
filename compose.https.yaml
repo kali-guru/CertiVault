@@ -1,0 +1,42 @@
+# Standalone HTTPS stack: docker compose -f compose.https.yaml up -d --build
+name: certivault
+services:
+  web:
+    build: .
+    image: certivault:local
+    restart: unless-stopped
+    init: true
+    environment:
+      SECRET_KEY: ${SECRET_KEY:?Run python scripts/configure.py first}
+      CA_PASSPHRASE: ${CA_PASSPHRASE:?Run python scripts/configure.py first}
+      APP_ENV: production
+      SESSION_COOKIE_SECURE: "true"
+      FLASK_DEBUG: "0"
+      MAX_CONTENT_LENGTH: ${MAX_CONTENT_LENGTH:-16777216}
+    volumes:
+      - certivault_data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 45s
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN to your public DNS hostname}
+    volumes:
+      - ./deployment/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      web:
+        condition: service_healthy
+volumes:
+  certivault_data:
+  caddy_data:
+  caddy_config:

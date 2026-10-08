@@ -39,6 +39,18 @@ Python 3.12+, Flask application factory and Blueprints, Jinja2, locally vendored
 | Certificates | X.509, RSA-PSS CA signatures, usage and identity extensions |
 | Private keys | Password-encrypted PKCS#8 using library BestAvailableEncryption |
 
+## Docker deployment
+
+Docker Compose runs CertiVault with Gunicorn and persistent database/key storage:
+
+```bash
+test -f .env || python scripts/configure.py
+docker compose up -d --build --wait
+docker compose exec web flask --app run seed-demo
+```
+
+Open **http://localhost:8000**. See [Docker deployment](docs/docker.md) for CachyOS installation, optional Caddy HTTPS, backups and updates. Docker was unavailable in the authoring environment; bootstrap tests and Gunicorn configuration were verified, but container execution remains to be checked on your host.
+
 ## CachyOS / Arch Linux installation
 
 Run these commands in a terminal. Do not use the system Python environment for pip dependencies.
