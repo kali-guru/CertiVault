@@ -1,0 +1,37 @@
+CertiVault verification — 2026-10-08
+Python 3.12.14
+Command: python -m pytest -q --cov=app --cov-report=term-missing --tb=short
+
+Name                       Stmts   Miss  Cover
+--------------------------------------------------------
+app/__init__.py               53      3    94%
+app/auth.py                   95      6    94%
+app/certificates.py           54      4    93%
+app/cli.py                    46      8    83%
+app/crypto/__init__.py         0      0   100%
+app/crypto/primitives.py      46      2    96%
+app/demonstrations.py         27      1    96%
+app/documents.py             179     24    87%
+app/extensions.py             20      0   100%
+app/forms.py                  44      0   100%
+app/models.py                 72      0   100%
+app/pki.py                   108     12    89%
+app/services.py               75      1    99%
+app/web.py                    43      0   100%
+--------------------------------------------------------
+TOTAL                        862     61    93%
+57 passed in 59.37s
+
+Additional executed checks:
+- Flask-Migrate initial upgrade succeeded.
+- flask db check: No new upgrade operations detected.
+- Encrypted CA initialization succeeded.
+- verify-security-config: Secrets configured; PEM permissions checked.
+- SQLite PRAGMA foreign_keys: 1.
+- Flask test-client home HTTP: 200.
+- Flask test-client public CA certificate endpoint HTTP: 200.
+- Python compileall: passed.
+- Staged-source secret/path scan: passed.
+- git diff --cached --check: passed.
+
+No real-browser visual QA or public deployment is claimed.

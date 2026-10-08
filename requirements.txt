@@ -1,0 +1,12 @@
+Flask>=3.1,<4
+Flask-SQLAlchemy>=3.1,<4
+Flask-Migrate>=4,<5
+Flask-WTF>=1.2,<2
+Flask-Login>=0.6,<1
+Flask-Limiter>=3.8,<5
+python-dotenv>=1,<2
+cryptography>=46,<51
+argon2-cffi>=23,<26
+email-validator>=2,<3
+pytest>=8,<10
+pytest-cov>=6,<8

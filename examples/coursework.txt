@@ -1,0 +1,5 @@
+FICTIONAL CONFIDENTIAL COURSEWORK
+From: Alice Example
+To: Bob Example
+Topic: Comparing confidentiality, integrity and authentication.
+This sample contains no real student information.
