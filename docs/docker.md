@@ -86,3 +86,25 @@ Gunicorn receives termination signals through the exec-based entrypoint and Comp
 Docker Engine/CLI was unavailable, so no image build, container start, port mapping, named-volume permissions or automatic HTTPS issuance was executed here. The actual Python bootstrap is covered by four tests: fresh migration with restart preservation, incomplete-CA rejection, wrong-passphrase rejection and missing-root rejection for existing identities. Gunicorn's configuration is checked directly. Run the Compose commands above on your Docker host to complete container verification; report errors from `docker compose logs` if startup fails.
 
 References: [Docker Compose health and dependency ordering](https://docs.docker.com/compose/how-tos/startup-order/), [Compose service controls](https://docs.docker.com/reference/compose-file/services/), [Gunicorn settings](https://docs.gunicorn.org/en/stable/settings.html), [Caddy automatic HTTPS](https://caddyserver.com/docs/automatic-https).
+
+## macOS and Windows
+
+Install Docker Desktop and start its engine. On Windows, enable WSL 2 / Linux containers. Clone this repository and open a terminal in its root. Native Python is only needed for generating `.env`; the app dependencies run inside the image.
+
+macOS Terminal:
+
+```bash
+test -f .env || python3 scripts/configure.py
+docker compose up -d --build --wait
+docker compose exec web flask --app run seed-demo
+```
+
+Windows PowerShell:
+
+```powershell
+if (!(Test-Path .env)) { py -3 scripts/configure.py }
+docker compose up -d --build --wait
+docker compose exec web flask --app run seed-demo
+```
+
+Both open at http://localhost:8000 and use a Docker-managed Linux data volume. Use `docker compose down` to stop while preserving data. The CI/CD workflow and prebuilt-image deployment are documented in [ci-cd.md](ci-cd.md). Native Windows filesystem permissions differ from POSIX; prefer the Linux container for the project's key-vault deployment.

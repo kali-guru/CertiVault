@@ -49,11 +49,16 @@ def register_commands(app):
     @app.cli.command('verify-security-config')
     def verify_config():
         """Check secret configuration and sensitive directory permissions."""
+        import os
         from pathlib import Path
         bad = [str(p.relative_to(current_app.instance_path)) for p in Path(current_app.instance_path).rglob('*')
-               if p.is_file() and p.suffix == '.pem' and p.stat().st_mode & 0o077]
+               if os.name == 'posix' and p.is_file() and p.suffix == '.pem' and p.stat().st_mode & 0o077]
         if bad:
             raise click.ClickException('Overly broad PEM permissions: '+', '.join(bad))
-        click.echo('Secrets configured; PEM permissions checked. Environment: '+current_app.config['APP_ENV'])
+        click.echo('Secrets configured. Environment: '+current_app.config['APP_ENV'])
+        if os.name == 'posix':
+            click.echo('PEM POSIX permissions checked.')
+        else:
+            click.echo('POSIX permission bits unavailable; restrict the instance directory using Windows ACLs or use the Linux container.')
         if current_app.config['APP_ENV'] != 'production':
             click.echo('Development mode: use HTTPS and secure cookies for deployment.')

@@ -1,6 +1,7 @@
 """Exercise the actual container bootstrap against fresh temporary volumes."""
 import secrets
 import pytest
+pytest.importorskip('fcntl', reason='Container bootstrap uses Linux/POSIX file locks; Windows runs the Linux image via Docker Desktop.')
 from sqlalchemy import text
 from app import create_app, pki
 from app.extensions import db

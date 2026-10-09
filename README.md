@@ -39,6 +39,10 @@ Python 3.12+, Flask application factory and Blueprints, Jinja2, locally vendored
 | Certificates | X.509, RSA-PSS CA signatures, usage and identity extensions |
 | Private keys | Password-encrypted PKCS#8 using library BestAvailableEncryption |
 
+## CI/CD on Linux, macOS and Windows
+
+GitHub Actions tests the application on all three operating systems, checks Docker startup and persistence, then publishes multi-platform images to `ghcr.io/kali-guru/certivault` after successful checks. Optional server deployment is disabled until you configure a host. See [CI/CD setup and status guidance](docs/ci-cd.md). Actual job results are available in the repository Actions tab.
+
 ## Docker deployment
 
 Docker Compose runs CertiVault with Gunicorn and persistent database/key storage:
